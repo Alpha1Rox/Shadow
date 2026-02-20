@@ -1,0 +1,93 @@
+import javax.swing.*;
+import java.awt.event.*;
+
+public class Calculator {
+    public static void main(String[] args) {
+        JFrame root = new JFrame("Calculator");
+        root.setSize(1000, 900);
+        root.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        root.setLayout(null);
+
+        JLabel n = new JLabel("First Number");
+        JLabel p = new JLabel("Second Number");
+        JLabel c = new JLabel("Enter the operation");
+
+        n.setBounds(50, 30, 120, 25);
+        p.setBounds(50, 70, 120, 25);
+        c.setBounds(50, 110, 150, 25);
+
+        root.add(n);
+        root.add(p);
+        root.add(c);
+
+        JTextField a = new JTextField();
+        JTextField b = new JTextField();
+        JTextField cm = new JTextField();
+
+        a.setBounds(200, 30, 100, 25);
+        b.setBounds(200, 70, 100, 25);
+        cm.setBounds(200, 110, 100, 25);
+
+        root.add(a);
+        root.add(b);
+        root.add(cm);
+
+        JLabel pr = new JLabel("<html>for addition press add<br>for subtraction press sub<br>for multiplication press mul<br>for division press div<br>for square root press sq<br>for exponent press ex</html>");
+        pr.setBounds(50, 150, 600, 100);
+        root.add(pr);
+
+        JLabel resultLabel = new JLabel("");
+        resultLabel.setBounds(50, 300, 900, 25);
+        root.add(resultLabel);
+
+        JButton operateBtn = new JButton("Operate");
+        operateBtn.setBounds(150, 250, 100, 25);
+        root.add(operateBtn);
+
+        operateBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String cmd = cm.getText().trim();
+                String val1 = a.getText().trim();
+                String val2 = b.getText().trim();
+                int a1, a2;
+                try {
+                    a1 = Integer.parseInt(val1);
+                    a2 = Integer.parseInt(val2);
+                } catch (NumberFormatException ex) {
+                    resultLabel.setText("Please enter valid numbers.");
+                    return;
+                }
+                String s;
+                switch (cmd) {
+                    case "add":
+                        s = "Addition is " + (a1 + a2);
+                        break;
+                    case "sub":
+                        s = "Subtraction is " + (a1 - a2);
+                        break;
+                    case "mul":
+                        s = "Multiplication is " + (a1 * a2);
+                        break;
+                    case "div":
+                        if (a2 == 0) {
+                            s = "Cannot divide by zero";
+                        } else {
+                            s = "Division is " + ((double)a1 / a2);
+                        }
+                        break;
+                     case "sq":
+                        s = "SqRoot of First Number" + (Math.sqrt(a1))+"   SqRoot of Second Number" + (Math.sqrt(a2)) ;
+                        break;
+                    case "ex":
+                        s = "Exponent is" + (Math.pow(a1,a2));
+                        break;
+                    default:
+                        s = "invalid command";
+                }
+                resultLabel.setText(s);
+            }
+        });
+
+        root.setVisible(true);
+    }
+}
